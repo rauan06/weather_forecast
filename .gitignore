@@ -1,0 +1,4 @@
+.env
+venv
+era5*
+*joblib

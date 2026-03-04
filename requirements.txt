@@ -1,0 +1,11 @@
+cdsapi
+xarray
+netCDF4
+requests
+psycopg2-binary
+scikit-learn
+joblib
+numpy
+pandas
+matplotlib
+jupyter
