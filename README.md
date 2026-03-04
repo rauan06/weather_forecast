@@ -2,6 +2,11 @@
 
 Detects anomalous weather events over Kazakhstan using historical ERA5 reanalysis data to train an Isolation Forest, then runs real-time inference on live Windy API forecasts.
 
+## Road Section Application & The Coordinate Problem
+The end goal is road safety — detecting weather anomalies along Kazakhstan's road sections in real time, so hazardous conditions can be flagged before incidents occur.
+The approach: train the Isolation Forest on ERA5 historical anomalies covering the full KZ grid, then use live forecast data to score road segments. ERA5 gives us a rich baseline of what "abnormal" weather looks like across the entire country, not just a handful of cities.
+The hard problem is coordinate resolution. Kazakhstan's road network contains thousands of segments, each of which would ideally be queried independently for live weather. But point-forecast APIs like Windy cap at 10,000 requests/day — querying every road coordinate individually would burn through that instantly and still not cover the full sections.
+
 ## Core Idea
 
 Isolation Forest is an unsupervised anomaly detection algorithm — it doesn't need labeled anomalies to train. It learns what "normal" weather looks like from 2 years of ERA5 data across the full KZ grid, then flags Windy forecast points that deviate from that learned distribution.
@@ -10,12 +15,6 @@ Three variables drive the model:
 - **vent** — wind speed (m/s), derived from U/V components
 - **pluie** — 3h precipitation accumulation (m)
 - **temp** — air temperature (K)
-
-# Road Section Application & The Coordinate Problem
-The end goal is road safety — detecting weather anomalies along Kazakhstan's road sections in real time, so hazardous conditions can be flagged before incidents occur.
-The approach: train the Isolation Forest on ERA5 historical anomalies covering the full KZ grid, then use live forecast data to score road segments. ERA5 gives us a rich baseline of what "abnormal" weather looks like across the entire country, not just a handful of cities.
-The hard problem is coordinate resolution. Kazakhstan's road network contains thousands of segments, each of which would ideally be queried independently for live weather. But point-forecast APIs like Windy cap at 10,000 requests/day — querying every road coordinate individually would burn through that instantly and still not cover the full sections.
-
 
 ## ERA5 → Windy Sync
 
